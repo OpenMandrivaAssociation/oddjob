@@ -3,7 +3,7 @@
 
 Name: oddjob
 Version: 0.30
-Release: 5%{?dist}
+Release: 5
 Source: http://fedorahosted.org/released/oddjob/oddjob-%{version}.tar.gz
 Patch0: oddjob-0.30-noclose.patch
 Patch1: oddjob-0.30-umasks.patch
@@ -11,12 +11,11 @@ Patch2: oddjob-0.30-tests.patch
 Patch3: oddjob-init-status.patch
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 License: BSD
-Group: System Environment/Daemons
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: dbus-devel >= 0.22, libselinux-devel, libxml2-devel
-BuildRequires: pam-devel, python-devel, pkgconfig
-BuildRequires: cyrus-sasl-devel, krb5-devel, openldap-devel
-BuildRequires: docbook-dtds, xmlto, autoconf, automake, libtool
+Group:	System/Configuration/Other
+BuildRequires:	dbus-devel >= 0.22, libselinux-devel, libxml2-devel
+BuildRequires:	pam-devel, python-devel, pkgconfig
+BuildRequires:	cyrus-sasl-devel, krb5-devel, openldap-devel
+BuildRequires:	docbook-dtds, xmlto, autoconf, automake, libtool
 Requires(post): /sbin/service
 Requires(postun): /sbin/service
 Requires(post): /sbin/chkconfig
@@ -168,177 +167,3 @@ if [ -f /var/lock/subsys/oddjobd ] ; then
 fi
 exit 0
 
-%changelog
-* Thu Feb 24 2011 Nalin Dahyabhai <nalin@redhat.com> 0.30-5
-- signal the system message bus to reload its configuration whenever we
-  drop a new configuration file in place for it during package %%post (#678345)
-
-* Thu Feb 10 2011 Nalin Dahyabhai <nalin@redhat.com> 0.30-4
-- make the init script exit with status 2 when given an unknown command, rather
-  than with status 1 (#674534)
-
-* Tue Jan 25 2011 Nalin Dahyabhai <nalin@redhat.com> 0.30-3
-- correct a build error by regenerating configure (part of #612617)
-
-* Tue Jan 25 2011 Nalin Dahyabhai <nalin@redhat.com> 0.30-2
-- backport patch to stop trying to close a stale connection to the bus,
-  which used to generate a warning from libdbus, but which now causes an
-  assertion failure (#634356)
-- when creating home directories, default to the UMASK setting from
-  /etc/login.defs (part of #659681) and ensure the execute bit is set
-  on any intermediate directories we create (the rest of #659681)
-- make sure the test helper has consistent permissions and make sure our
-  self-tests verify them (#612617)
-
-* Wed Jan 27 2010 Nalin Dahyabhai <nalin@redhat.com> 0.30-1
-- drop the shared library and python bindings, which so far as i can tell
-  weren't being used, obsoleting them to avoid a mess on upgrades
-- move the mkhomedir helper from %%{_libdir}/%{name} to %%{_libexecdir}/%{name}
-  to make the multilib configuration files agree (#559232)
-- use %%global instead of %%define
-
-* Mon Jan 25 2010 Nalin Dahyabhai <nalin@redhat.com> - 0.29.1-5
-- show that we implement force-reload and try-restart in the init script's
-  help message (#522131)
-
-* Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.29.1-4
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
-
-* Thu Feb 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.29.1-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
-
-* Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 0.29.1-2
-- Rebuild for Python 2.6
-
-* Wed May 28 2008 Nalin Dahyabhai <nalin@redhat.com> 0.29.1-1
-- when we install the mkhomedir subpackage, if there's a running oddjobd, ask
-  it to reload its configuration
-- fix missing bits from the namespace changes in configuration files
-- restart the service in %%postun
-
-* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.29-2
-- Autorebuild for GCC 4.3
-
-* Wed Sep  5 2007 Nalin Dahyabhai <nalin@redhat.com> 0.29-1
-- split off mkhomedir bits into a subpackage (#236820)
-- take a pass at new-init-ifying the init script (#247005)
-
-* Thu Aug 16 2007 Nalin Dahyabhai <nalin@redhat.com>
-- move helpers to libexecdir, keeping pkglibdir around in the package (#237207)
-
-* Mon Apr  9 2007 Nalin Dahyabhai <nalin@redhat.com> 0.28-1
-- split off python subpackage, make -devel depend on -libs, let autodeps
-  provide the main package's dependency on -libs (#228377)
-
-* Thu Feb 15 2007 Nalin Dahyabhai <nalin@redhat.com> 0.27-8
-- configure with --disable-dependency-tracking (Ville Skyttä, #228928)
-
-* Thu Jul 25 2006 Nalin Dahyabhai <nalin@redhat.com> 0.27-7
-- unmark the init script as a %%config file (part of #197182)
-
-* Thu Jul 20 2006 Nalin Dahyabhai <nalin@redhat.com> 0.27-6
-- rebuild
-
-* Thu Jul 20 2006 Nalin Dahyabhai <nalin@redhat.com> 0.27-5
-- rebuild
-
-* Thu Jul 20 2006 Nalin Dahyabhai <nalin@redhat.com> 0.27-4
-- rebuild
-
-* Thu Jul 20 2006 Nalin Dahyabhai <nalin@redhat.com> 0.27-3
-- rebuild
-
-* Thu Jul 20 2006 Nalin Dahyabhai <nalin@redhat.com> 0.27-2
-- rebuild
-
-* Wed Jul 19 2006 Nalin Dahyabhai <nalin@redhat.com> 0.27-1
-- update to 0.27-1:
-  - don't attempt to subscribe to all possible messages -- the message bus
-    will already route to us messages addressed to us, and if we try for
-    more than that we may run afoul of SELinux policy, generating spewage
-- add a build dependency on pkgconfig, for the sake of FC3
-- update docs and comments because D-BUS is now called D-Bus
-
-* Tue May  2 2006 Nalin Dahyabhai <nalin@redhat.com> 0.26-4
-- rebuild
-
-* Tue May  2 2006 Nalin Dahyabhai <nalin@redhat.com> 0.26-3
-- rebuild
-
-* Tue May  2 2006 Nalin Dahyabhai <nalin@redhat.com> 0.26-2
-- rebuild
-
-* Tue May  2 2006 Nalin Dahyabhai <nalin@redhat.com> 0.26-1
-- update to 0.26-1:
-  - don't get confused when ACL entries for introspection show up in the
-    configuration before we add the handlers for them
-  - export $ODDJOB_CALLING_USER to helpers
-
-* Tue May  2 2006 Nalin Dahyabhai <nalin@redhat.com>
-- add recommended dependency on pkgconfig in the -devel subpackage
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-8
-- rebuild
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-7
-- rebuild
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-6
-- rebuild
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-5
-- rebuild
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-4
-- rebuild
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-3
-- rebuild
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-2
-- rebuild
-
-* Tue Apr 11 2006 Nalin Dahyabhai <nalin@redhat.com> 0.25-1
-- update to 0.25:
-  - add introspection for parents of objects specified in the configuration
-  - oddjobd can reload its configuration now
-  - add -u (umask) and -s (skeldir) flags to the mkhomedir helper (#246681)
-
-* Tue Feb 28 2006 Nalin Dahyabhai <nalin@redhat.com> 0.24-1
-- update to 0.24, fixing some build errors against D-BUS 0.30-0.33
-- require xmlto, because the generated HTML differs depending on whether
-  or not we know how to enforce ACLs which include SELinux context info
-- build with DocBook 4.3
-
-* Mon Feb 27 2006 Nalin Dahyabhai <nalin@redhat.com> 0.23-3
-- rebuild
-
-* Mon Feb 27 2006 Nalin Dahyabhai <nalin@redhat.com> 0.23-2
-- rebuild
-
-* Fri Jan 27 2006 Nalin Dahyabhai <nalin@redhat.com> 0.23-1
-- fix compilation against older versions of D-BUS if the
-  GetConnectionSELinuxSecurityContext method turns out to be available
-
-* Mon Jan 16 2006 Nalin Dahyabhai <nalin@redhat.com> 0.22-1
-- fix some path mismatches in the sample configuration files
-- don't try to set a reconnect timeout until after we've connected
-
-* Mon Jan  9 2006 Nalin Dahyabhai <nalin@redhat.com> 0.21-3
-- prefer BuildRequires: to BuildPrereq (#176452)
-- require /sbin/service at uninstall-time, because we use it (#176452)
-- be more specific about when we require /sbin/chkconfig (#176452)
-
-* Fri Jan  6 2006 Nalin Dahyabhai <nalin@redhat.com> 0.21-2
-- add some missing build-time requirements
-
-* Thu Dec 22 2005 Nalin Dahyabhai <nalin@redhat.com> 0.21-1
-- fix the location for the sample D-BUS configuration doc file
-- own more created directories
-
-* Thu Dec 22 2005 Nalin Dahyabhai <nalin@redhat.com> 0.20-1
-- update to 0.20
-- break shared libraries and modules for PAM and python into a subpackage
-  for better behavior on multilib boxes
-- if we're not building a sample subpackage, include the sample files in
-  the right locations as %%doc files

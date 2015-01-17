@@ -3,7 +3,7 @@
 
 Name: oddjob
 Version: 0.30
-Release: 5%{?dist}
+Release: 5
 Source: http://fedorahosted.org/released/oddjob/oddjob-%{version}.tar.gz
 Patch0: oddjob-0.30-noclose.patch
 Patch1: oddjob-0.30-umasks.patch
@@ -11,7 +11,7 @@ Patch2: oddjob-0.30-tests.patch
 Patch3: oddjob-init-status.patch
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 License: BSD
-Group: System Environment/Daemons
+Group: System/Servers
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: dbus-devel >= 0.22, libselinux-devel, libxml2-devel
 BuildRequires: pam-devel, python-devel, pkgconfig

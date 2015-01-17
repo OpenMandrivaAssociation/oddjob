@@ -1,5 +1,4 @@
 %global build_sample_subpackage 0
-%global dbus_send /bin/dbus-send
 
 Name: oddjob
 Version: 0.30
@@ -16,10 +15,10 @@ BuildRequires:	dbus-devel >= 0.22, selinux-devel, libxml2-devel
 BuildRequires:	pam-devel, python-devel, pkgconfig
 BuildRequires:	sasl-devel, krb5-devel, openldap-devel
 BuildRequires:	docbook-dtds, xmlto, autoconf, automake, libtool
-Requires(post): /sbin/service
-Requires(postun): /sbin/service
-Requires(post): /sbin/chkconfig
-Requires(pre): /sbin/chkconfig
+Requires(post): initscripts
+Requires(postun): initscripts
+Requires(post): chkconfig
+Requires(pre): chkconfig
 Obsoletes: oddjob-devel < 0.30, oddjob-libs < 0.30, oddjob-python < 0.30
 URL: http://www.fedorahosted.org/oddjob
 
@@ -31,7 +30,7 @@ connect to it and issue requests using the system-wide message bus.
 Group: System/Servers
 Summary: An oddjob helper which creates and populates home directories
 Requires: %{name} = %{version}-%{release}
-Requires(post): %{dbus_send}, grep, sed
+Requires(post): dbus, grep, sed
 
 %description mkhomedir
 This package contains the oddjob helper which can be used by the

@@ -12,9 +12,9 @@ Patch3: oddjob-init-status.patch
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 License: BSD
 Group:	System/Configuration/Other
-BuildRequires:	dbus-devel >= 0.22, libselinux-devel, libxml2-devel
+BuildRequires:	dbus-devel >= 0.22, selinux-devel, libxml2-devel
 BuildRequires:	pam-devel, python-devel, pkgconfig
-BuildRequires:	cyrus-sasl-devel, krb5-devel, openldap-devel
+BuildRequires:	sasl-devel, krb5-devel, openldap-devel
 BuildRequires:	docbook-dtds, xmlto, autoconf, automake, libtool
 Requires(post): /sbin/service
 Requires(postun): /sbin/service
@@ -28,7 +28,7 @@ oddjob is a D-BUS service which performs particular tasks for clients which
 connect to it and issue requests using the system-wide message bus.
 
 %package mkhomedir
-Group: System Environment/Daemons
+Group: System/Servers
 Summary: An oddjob helper which creates and populates home directories
 Requires: %{name} = %{version}-%{release}
 Requires(post): %{dbus_send}, grep, sed
@@ -39,7 +39,7 @@ pam_oddjob_mkhomedir module to create a home directory for a user
 at login-time.
 
 %package sample
-Group: System Environment/Daemons
+Group: System/Servers
 Summary: A sample oddjob service.
 Requires: %{name} = %{version}-%{release}
 

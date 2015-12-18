@@ -1,4 +1,5 @@
 %global build_sample_subpackage 0
+%define _disable_rebuild_configure 1
 
 Name: oddjob
 Version: 0.30

@@ -3,7 +3,7 @@
 
 Name: oddjob
 Version: 0.30
-Release: 6
+Release: 7
 Source: http://fedorahosted.org/released/oddjob/oddjob-%{version}.tar.gz
 Patch0: oddjob-0.30-noclose.patch
 Patch1: oddjob-0.30-umasks.patch

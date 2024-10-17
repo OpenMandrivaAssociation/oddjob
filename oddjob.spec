@@ -21,7 +21,7 @@ Requires(postun): initscripts
 Requires(post): chkconfig
 Requires(pre): chkconfig
 Obsoletes: oddjob-devel < 0.30, oddjob-libs < 0.30, oddjob-python < 0.30
-URL: http://www.fedorahosted.org/oddjob
+URL: https://www.fedorahosted.org/oddjob
 
 %description
 oddjob is a D-BUS service which performs particular tasks for clients which

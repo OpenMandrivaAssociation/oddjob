@@ -12,6 +12,8 @@ Patch3: oddjob-init-status.patch
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 License: BSD
 Group:	System/Configuration/Other
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	dbus-devel >= 0.22, selinux-devel, libxml2-devel
 BuildRequires:	pam-devel, python-devel, pkgconfig
 BuildRequires:	sasl-devel, krb5-devel, openldap-devel

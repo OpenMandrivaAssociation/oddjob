@@ -1,0 +1,21 @@
+Okay, libdbus used to generate a warning if we used dbus_connection_close(),
+but now it aborts on shared connections. Upstream 0.34.7 uses private
+connections for the service (close+unref) and unref-only for shared client
+paths; document that distinction at the helper.
+
+diff --git a/src/oddjob_dbus.c b/src/oddjob_dbus.c
+index 5708f25..ea53cdf 100644
+--- a/src/oddjob_dbus.c
++++ b/src/oddjob_dbus.c
+@@ -121,7 +121,10 @@ oddjob_dbus_unbind(DBusConnection *conn, const char *service_name)
+ #endif
+ }
+ 
+-/* Completely dispose of a connection to the bus. */
++/* Completely dispose of a connection to the bus.
++ * Private connections (dbus_bus_get_private) require close before unref.
++ * Shared connections must not be closed (libdbus aborts); use unref only.
++ */
+ void
+ oddjob_dbus_connection_close(DBusConnection *conn)
+ {

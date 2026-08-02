@@ -2,12 +2,12 @@
 %define _disable_rebuild_configure 1
 
 Name: oddjob
-Version: 0.30
-Release: 7
-Source: http://fedorahosted.org/released/oddjob/oddjob-%{version}.tar.gz
-Patch0: oddjob-0.30-noclose.patch
-Patch1: oddjob-0.30-umasks.patch
-Patch2: oddjob-0.30-tests.patch
+Version: 0.34.7
+Release: 1
+Source: https://releases.pagure.org/oddjob/oddjob-%{version}.tar.gz
+Patch0: oddjob-0.34.7-noclose.patch
+Patch1: oddjob-0.34.7-umasks.patch
+Patch2: oddjob-0.34.7-tests.patch
 Patch3: oddjob-init-status.patch
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 License: BSD
@@ -23,7 +23,7 @@ Requires(postun): initscripts
 Requires(post): chkconfig
 Requires(pre): chkconfig
 Obsoletes: oddjob-devel < 0.30, oddjob-libs < 0.30, oddjob-python < 0.30
-URL: https://www.fedorahosted.org/oddjob
+URL: https://pagure.io/oddjob
 
 %description
 oddjob is a D-BUS service which performs particular tasks for clients which
@@ -50,10 +50,10 @@ This package contains a trivial sample oddjob service.
 
 %prep
 %setup -q
-%patch0 -p1 -b .noclose
-%patch1 -p1 -b .umasks
-%patch2 -p1 -b .tests
-%patch3 -p1 -b .init-status
+%patch -P0 -p1 -b .noclose
+%patch -P1 -p1 -b .umasks
+%patch -P2 -p1 -b .tests
+%patch -P3 -p1 -b .init-status
 autoreconf -f -i
 
 %build

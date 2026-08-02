@@ -1,0 +1,15 @@
+Test suite and documentation fixes.  Most of the original changes landed
+upstream; finish the incomplete oddjob_request(1) -I description.
+
+diff --git a/src/oddjob_request.1.in b/src/oddjob_request.1.in
+index 1d20069..37e6745 100644
+--- a/src/oddjob_request.1.in
++++ b/src/oddjob_request.1.in
+@@ -35,6 +35,7 @@ The method is part of the named interface instead of \fI@NAMESPACE@.@PACKAGE@\fR
+ \fB\-I\fR
+ Default to the method and interface names used for D-Bus introspection
+ (\fI@DBUS_INTROSPECTION_METHOD@\fR and \fI@DBUS_INTROSPECTION_INTERFACE@\fR,
++respectively).
+ .TP
+ \fB\-t\fR timeout
+ Wait at most \fItimeout\fR seconds for a response.  The default is set by the

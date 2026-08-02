@@ -1,0 +1,17 @@
+Clean up how umasks work.  Default to UMASK/HOME_MODE from /etc/login.defs
+and keep execute bits on intermediate directories.  Functional changes are
+in upstream 0.34.7; retain a pointer at get_umask.
+
+diff --git a/src/mkhomedir.c b/src/mkhomedir.c
+index be85959..92d2ab2 100644
+--- a/src/mkhomedir.c
++++ b/src/mkhomedir.c
+@@ -263,6 +263,8 @@ mkhomedir(const char *user, int flags)
+ 	return 0;
+ }
+ 
++/* Read UMASK/HOME_MODE from /etc/login.defs (see also intermediate-dir
++ * execute bits preserved in oddjob_selinux_mkdir). */
+ static mode_t
+ get_umask(int *configured, const char *variable)
+ {

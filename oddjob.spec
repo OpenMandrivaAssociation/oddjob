@@ -105,7 +105,6 @@ rm -fr "$RPM_BUILD_ROOT"
 %endif
 %{_unitdir}/oddjobd.service
 %{_bindir}/*
-%{_sbindir}/*
 %config(noreplace) %{_sysconfdir}/dbus-*/system.d/oddjob.conf
 %config(noreplace) %{_sysconfdir}/oddjobd.conf
 %dir %{_sysconfdir}/oddjobd.conf.d

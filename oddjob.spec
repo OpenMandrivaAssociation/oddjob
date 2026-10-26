@@ -14,6 +14,7 @@ License: BSD
 Group:	System/Configuration/Other
 BuildRequires:	libtool-base
 BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	dbus-devel >= 0.22, selinux-devel, pkgconfig(libxml-2.0)
 BuildRequires:	pam-devel, python-devel, pkgconfig
 BuildRequires:	sasl-devel, krb5-devel, pkgconfig(ldap)

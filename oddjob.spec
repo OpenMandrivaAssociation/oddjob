@@ -19,10 +19,6 @@ BuildRequires:	dbus-devel >= 0.22, selinux-devel, pkgconfig(libxml-2.0)
 BuildRequires:	pam-devel, python-devel, pkgconfig
 BuildRequires:	sasl-devel, krb5-devel, pkgconfig(ldap)
 BuildRequires:	docbook-dtds, xmlto, autoconf, automake, libtool
-Requires(post): initscripts
-Requires(postun): initscripts
-Requires(post): chkconfig
-Requires(pre): chkconfig
 Obsoletes: oddjob-devel < 0.30, oddjob-libs < 0.30, oddjob-python < 0.30
 URL: https://pagure.io/oddjob
 
@@ -107,7 +103,7 @@ rm -fr "$RPM_BUILD_ROOT"
 %if ! %{build_sample_subpackage}
 %doc sample-install-root/sample
 %endif
-%{_initrddir}/oddjobd
+%{_unitdir}/oddjobd.service
 %{_bindir}/*
 %{_sbindir}/*
 %config(noreplace) %{_sysconfdir}/dbus-*/system.d/oddjob.conf
@@ -139,20 +135,7 @@ rm -fr "$RPM_BUILD_ROOT"
 
 %post
 if test $1 -eq 1 ; then
-	killall -HUP dbus-daemon 2>&1 > /dev/null
-fi
-/sbin/chkconfig --add oddjobd
-
-%postun
-if [ $1 -gt 0 ] ; then
-	/sbin/service oddjobd condrestart 2>&1 > /dev/null || :
-fi
-exit 0
-
-%preun
-if [ $1 -eq 0 ] ; then
-	/sbin/service oddjobd stop > /dev/null 2>&1
-	/sbin/chkconfig --del oddjobd
+	killall -HUP dbus-daemon 2>&1 > /dev/null || :
 fi
 
 %post mkhomedir
